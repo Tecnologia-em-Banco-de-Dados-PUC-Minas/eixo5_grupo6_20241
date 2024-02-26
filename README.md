@@ -6,18 +6,20 @@ Arquitetura de Dados em Nuvem
 `2024/5º SEMESTRE`
 
 Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo desenvolvido.
+
 "Aplicação com IA e Análise de Resultados para um cliente do ramo de Salão de Beleza"
 
 ## Integrantes
-* Nome completo do aluno 1
-* Nome completo do aluno 2
-* Nome completo do aluno 3
-* Nome completo do aluno 4
-* Nome completo do aluno 5
-* Nome completo do aluno 6
+* Anselmo Berriel de Lira
+* Beatriz Ornelas Miranda
+* Guilherme Teixeira Silva
+* Roberto Borba Pinto
+* Thiago dos Santos Rodrigues
+* Thomas Eduardo da Silva Olympio
+* Wellington Patrick Viana dos Santos
 
 ## Orientador
-* Nome completo do professor 1
+* Cristiano Geraldo Teixeira Silva
 
 # Documentação
 
