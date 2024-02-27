@@ -25,7 +25,7 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo de
 
 | Etapa         | Atividades |
 |  :----:   | ----------- |
-| ETAPA 1        |[Documentação de Contexto](projeto/inicio_do_projeto.md) |
+| ETAPA 1        |[Documentação de Contexto](projeto/inicio_do_projeto.md) https://github.com/Puc-Mg-Loucos-Dos-Dados/projeto_analytics_meteorologia/blob/master/Etapa%205/Grupo%204%20-%20Etapa%205.docx |
 | ETAPA 2        |[Coleta de Dados](projeto/coleta_dados.md) https://github.com/Puc-Mg-Loucos-Dos-Dados/projeto_analytics_meteorologia.git |
 | ETAPA 3        |[Pré-processamento](projeto/pre_processamento.md) |
 | ETAPA 4        |[Aprendizagem de Máquina](projeto/aprendizado_maquina_rev.md)|
