@@ -1,13 +1,11 @@
 # Eixo-5
 Arquitetura de Dados em Nuvem
 
-# TÍTULO DO PROJETO
+# Aplicação com IA e Análise de Resultados para um cliente do ramo de Salão de Beleza
 `CURSO BANCO DE DADOS`
 `2024/5º SEMESTRE`
 
-Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo desenvolvido.
-
-"Aplicação com IA e Análise de Resultados para um cliente do ramo de Salão de Beleza"
+O grupo de estudos da PUC MINAS em parceria a empresa Fios de Luxo buscará explicar a relação das estações e como a temperatura afeta o comercio localizado em Salvador, Bahia. A necessidade da empresa de entender o clima pode ser a chave para antecipar tendências e o grupo está determinado a encontrar as respostas diante das dúvidas da empresa parceiras.
 
 ## Integrantes
 * Anselmo Berriel de Lira
