@@ -1,11 +1,17 @@
 Componentes de Arquitetura
 
 Modelagem: SQL Relacional - MySQL 
+
 SGBD: MySQL
+
 Plataforma e serviços de nuvem: AWS 
+
 Frameworks: Api Rest e Open Weather 
+
 Linguagem de programação: Python 
+
 Ferramenta de banco de dados: Dbeaver 
+
 IDE: Visual Studio Code
 
 Arquitetura da Solução
