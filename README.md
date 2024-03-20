@@ -24,7 +24,7 @@ O grupo de estudos da PUC MINAS em parceria a empresa Fios de Luxo buscará expl
 | Etapa         | Atividades |
 |  :----:   | ----------- |
 | ETAPA 1        |[Documentação de Contexto](projeto/inicio_do_projeto.md)
-| ETAPA 2        |[Coleta de Dados](projeto/coleta_dados.md) https://github.com/Puc-Mg-Loucos-Dos-Dados/projeto_analytics_meteorologia.git |
+| ETAPA 2        |[Coleta de Dados](projeto/coleta_dados.md)
 | ETAPA 3        |[Pré-processamento](projeto/pre_processamento.md) |
 | ETAPA 4        |[Aprendizagem de Máquina](projeto/aprendizado_maquina_rev.md)|
 | ETAPA 5        |[Análise dos Resultados](projeto/analise_resultados.md) |
