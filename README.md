@@ -3,7 +3,7 @@ Arquitetura de Dados em Nuvem
 
 # Aplicação com IA e Análise de Resultados para um cliente do ramo de Salão de Beleza
 `CURSO BANCO DE DADOS`
-`2024/5º SEMESTRE`
+`2024/1º SEMESTRE`
 
 O grupo de estudos da PUC MINAS em parceria a empresa Fios de Luxo buscará explicar a relação das estações e como a temperatura afeta o comercio localizado em Salvador, Bahia. A necessidade da empresa de entender o clima pode ser a chave para antecipar tendências e o grupo está determinado a encontrar as respostas diante das dúvidas da empresa parceiras.
 
