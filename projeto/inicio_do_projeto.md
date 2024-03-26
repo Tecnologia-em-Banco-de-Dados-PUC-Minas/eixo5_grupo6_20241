@@ -1,4 +1,4 @@
-# Introdução
+[# Introdução
 
 O grupo de estudos da PUC MINAS em parceria a empresa Fios de Luxo buscará explicar a relação das estações e como a temperatura afeta o comercio localizado em Salvador, Bahia. A necessidade da empresa de entender o clima pode ser a chave para antecipar tendências e o grupo está determinado a encontrar as respostas diante das dúvidas da empresa parceiras.
 
@@ -27,3 +27,4 @@ Dados a serem coletados:
 • Faturamento
 • Atendimento
 
+](https://openweathermap.org/)https://openweathermap.org/
