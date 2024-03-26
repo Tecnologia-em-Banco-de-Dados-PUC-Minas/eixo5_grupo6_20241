@@ -9,7 +9,7 @@ URL’s:
 
 
 
-[https://www.tempo.com/](https://openweathermap.org/)
+[https://openweathermap.org/]
 
 Os dados a serem coletados serão os seguintes:
 •	Pressão
@@ -27,4 +27,4 @@ Dados a serem coletados:
 • Faturamento
 • Atendimento
 
-](https://openweathermap.org/)https://openweathermap.org/
+]
