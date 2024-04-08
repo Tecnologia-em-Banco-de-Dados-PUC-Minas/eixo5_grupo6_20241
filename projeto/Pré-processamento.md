@@ -1,143 +1,77 @@
-Componentes de Arquitetura
+**Arquitetura de Coleta:**
 
-Modelagem: SQL Relacional - MySQL SGBD: MySQL
-Plataforma e serviços de nuvem: AWS 
-Frameworks: Api Rest e Open Weather Linguagem de programação: 
-Python Ferramenta de banco de dados: Dbeaver IDE: Visual Studio Code
+A arquitetura de coleta terá integração com a API REST fornecida. Os serviços da AWS serão utilizados para criar funções Lambda que disparem a coleta de dados em intervalos regulares apenas os dados climáticos, devido a questão de segurança e privacidade do salão parceiro Fios de Luxo os dados serão fornecidos por ele quando solicitado os dados referentes as tabelas cliente, serviço, pagamento e agenda. A API REST fornecida será usada para obter os dados atualizados.
 
+**Orquestração do pipeline de dados**
 
-	Segurança dos Dados e LGPD
-
-	Ocultação de Dados Reais dos Clientes do Salão Parceiro
- 
-Segurança de Dados:
-O projeto de Meteorologia prioriza a segurança dos dados coletados e armazenados. As medidas tomadas para garantir a segurança incluem:
-•	Uso de protocolos seguros: 
-o	HTTPS para comunicação com a API de meteorologia.
-o	SSH para acesso ao banco de dados RDS.
-•	Criptografia de dados: 
-o	Senhas armazenadas em formato criptografado.
-o	Banco de dados RDS criptografado em repouso e em trânsito.
-•	Controle de acesso: 
-o	Permissões granulares para acesso ao banco de dados e aos dados coletados.
-o	Autenticação de usuários com senhas fortes e chaves SSH.
-•	Monitoramento e registro: 
-o	Monitoramento da atividade do sistema para detectar e prevenir acessos não autorizados.
-o	Registro de todas as atividades do sistema para fins de auditoria.
-
-Importância da Privacidade:
-No projeto de Meteorologia, a privacidade dos clientes do salão parceiro é de suma importância. Para garantir a confidencialidade das informações, os dados reais dos clientes foram ocultados durante todo o processo de análise.
+Capturando	dados	históricos	climáticos	com	Python	e	API (OpenWeather)
 
 
-Processo de Ocultação:
-As tabelas que continham dados reais dos clientes foram tratadas para torná-las fictícias. Isso foi feito através de técnicas como:
-•	Pseudonimização: 
-o	Os nomes dos clientes foram substituídos por pseudônimos aleatórios.
-•	Remoção de dados sensíveis: 
-o	Quaisquer dados que poderiam ser usados para identificar ou contatar os clientes foram removidos.
-•	Adição de ruído: 
-o	Ruído aleatório foi adicionado a alguns dados para torná-los menos precisos e menos úteis para fins de identificação.
-Benefícios da Ocultação:
-A ocultação dos dados reais dos clientes oferece diversos benefícios, como:
-•	Proteção da privacidade dos clientes: 
-o	Os clientes podem ter certeza de que seus dados pessoais não serão expostos ou vazados.
-•	Maior segurança: 
-o	O risco de violação de dados é reduzido, pois os dados reais dos clientes não estão disponíveis.
-•	Maior confiabilidade dos resultados: 
-o	A ocultação dos dados reais ajuda a garantir que os resultados da análise sejam imparciais e confiáveis.
+# Definindo a data inicial e a data final data_inicial = datetime(2023, 5, 2)
+data_final = datetime(2023, 5, 31)
 
-Arquitetura da Solução
+# Função para converter de Kelvin para Celsius def kelvin_para_celsius(temp_kelvin):
+return temp_kelvin - 273.15
+
+# Função para obter dados climáticos da API OpenWeather def obter_temperatura(data):
+print("Iniciando coleta") link =
+f"https://api.openweathermap.org/data/3.0/onecall/day_summary?lat={latitu de}&lon={longitude}&date={data.strftime('%Y-%m-%d')}&appid={API_KEY}"
+requisicao = requests.get(link) requisicao_dic = requisicao.json() temperatura_min =
+kelvin_para_celsius(requisicao_dic['temperature']['min']) temperatura_max =
+kelvin_para_celsius(requisicao_dic['temperature']['max']) temperatura_tarde =
+kelvin_para_celsius(requisicao_dic['temperature']['afternoon']) temperatura_noite =
+kelvin_para_celsius(requisicao_dic['temperature']['night']) temperatura_noite =
+kelvin_para_celsius(requisicao_dic['temperature']['evening']) temperatura_manha =
+kelvin_para_celsius(requisicao_dic['temperature']['morning']) return temperatura_min, temperatura_max, temperatura_tarde,
+temperatura_noite, temperatura_manha
+
+# Loop para coletar os dados para cada data while data_inicial <= data_final:
+temperatura_min, temperatura_max, temperatura_tarde, temperatura_noite, temperatura_manha = obter_temperatura(data_inicial)
+if temperatura_min is not None and temperatura_max is not None and temperatura_tarde is not None and temperatura_noite is not None and temperatura_manha is not None:
+# Conectar ao banco de dados db_connection = mysql.connector.connect(
+host=host, user=user, password=password, database=database
+)
+cursor = db_connection.cursor()
+
+# Inserir os dados no banco de dados
+
+![image](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/assets/161390146/c1bd554c-5d6c-4b6b-a521-6cac39fdab85)
+![image](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/assets/161390146/4a442a6f-ec75-4828-87f3-205fa668a978)
+![image](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/assets/161390146/a7c807eb-dfa0-45b9-a5a5-ff8f5cc8aa14)
+![image](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/assets/161390146/89c79382-b070-4c66-a92b-cf8a096b573c)
 
 
-Figura 1- Arquitetura da solução
-![image](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/assets/161390146/734d8f8d-b04d-4ea0-a7ba-f7ab578123a9)
+
 
  
-Coleta do Histórico
-
-
-
-Figura 2- Coleta do hitstórico
-![image](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/assets/161390146/42d225b4-bd40-4624-95ef-9a32222b3046)
-
-
-
-
-
-
-Modelagem de Dados:
-
-O projeto utilizará o esquema de banco de dados no MySQL para armazenar os dados meteorológicos, como temperatura, clima, turno. Seguindo a estrutura de Data Warehouse Star Schema.
  
-Tabela dimensão d_agenda:
-
-    data_id DATE NOT NULL PRIMARY KEY,
-    dia INT DEFAULT NULL,
-    UNIQUE(data_id) 
-
-
-Tabela dimensão  d_clima: 
-
-    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    temperatura_min DOUBLE DEFAULT NULL,
-    temperatura_max DOUBLE DEFAULT NULL,
-    temperatura_tarde DOUBLE DEFAULT NULL,
-    temperatura_noite DOUBLE DEFAULT NULL,
-    temperatura_manha DOUBLE DEFAULT NULL,
-    dia DATE NOT NULL,
-    data_atual DATE NOT NULL,
-    FOREIGN KEY (dia) REFERENCES d_agenda(data_id),
-    UNIQUE (dia)
+Figura 4 – Código python
 
 
 
- Tabela dimensão d_cliente: 
 
-    id int unsigned not null  auto_increment,
-    nome varchar(120) not null primary key,
-    telefone varchar(45) default null
+**Desenvolvimento das atividades**
 
 
-Tabela dimensãod_funcionario: 
-
-    id int unsigned primary key not null auto_increment,
-    nome varchar(120) not null,
-    cargo varchar(64) default null,
-    telefone varchar(20) default null
+A captura dos dados climáticas se inicia com a inserção da chave API que se dá através do cadastro no site, https://openweathermap.org/, após isso foi necessário fazer uma requisição HTTPS que gera um JSON como resultado da coleta dos dados climáticos. Coletados os dados o código faz uma conexão com o Banco de Dados MySQL, quando conectado ele transforma os dados JSON chaves em colunas para inserção dos valores armazenados. Assim ele retorna um “Coletando dados” quando inicia a coleta e “Dados coletados e inseridos no banco de dados com sucesso” quando a inserção no banco não retorna erro. Os dados fornecidos pelo salão parceiro como agenda, clientes, pagamento e serviço passou por um tratamento de LGPD e foi inserido dentro do banco, para compreensão e análise do tratamento das tabelas (desenvolvido em python) estão no seguinte contexto:
+**[projeto/Etapa 3/Tratamento de dados](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/tree/main/projeto/Etapa%203/Tratamento%20de%20dados)**
 
 
+Tabela dimensão D_clima
 
-Tabela dimensão d_servico: 
-
-    id int unsigned not null primary key auto_increment,
-    nome varchar(120) not null,
-    valor int DEFAULT 0
-
-
-Tabela fato_pagamento:
-
-    id_cliente int unsigned not null,
-    data_id date not null,
-    id_funcionario int unsigned not null,
-    id_servico int unsigned not null,
-    valor_pago float default 0,
-    primary key (id_cliente, data_id, id_funcionario, id_servico),
-    foreign key FK_FatoPagamento_Cliente(id_cliente)   references d_cliente(id),
-    foreign key FK_FatoPagamento_Agenda(data_id) references d_agenda(data_id),
-    foreign key FK_FatoPagamento_Funcionario(id_funcionario) references d_funcionario(id),
-    foreign key FK_FatoPagamento_Servico(id_servico) references d_servico(id)
+A tabela “d_clima” iniciou sem dados
  
- 
-Figura 3 – Modelagem de dados no   Mysql 
-![image](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/assets/161390146/815772d5-103a-4e2a-a5de-fac7060b6edb)
+ ![image](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/assets/161390146/22b6df33-7d2f-41bd-a5b4-7d6df993887f)
+
+Figura 5 - Exibição da tabela d_clima no MySQL
 
 
-Coleta de Dados:
+Executando o código em Python
 
-O sistema de coleta de dados que obterá informações meteorológicas para as cidades especificadas a partir da API REST fornecida. Os dados serão coletados em intervalos regulares (por exemplo, a cada hora) e inseridos na tabela "d_Clima" do RDS. Assim como os dados do salão coletados pelo site https://trinks.com.br, os dados serão em .csv e incluidos nas tabelas "d_agenda", "d_cliente", "d_funcionario", "d_servico" e "f_pagamento"
+![image](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/assets/161390146/9e7f01ef-2bac-4a69-a031-793e5724ae6c)
 
+Figura 6 – Teste no Visual Studio Code
 
-Arquitetura de Coleta:
+![image](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/assets/161390146/c5674ba6-8f86-46d6-9f10-3840d8a20f7d)
+Figura 7 - Continuação dos testes no Visual Studio Code
 
-
-A arquitetura de coleta terá integração com a API REST fornecida. Os serviços da AWS serão utilizados para criar funções Lambda que disparem a coleta de dados em intervalos regulares apenas os dados climáticos, devido a questão de segurança e privacidade do salão parceiro Fios de Luxo os dados serão fornecidos por ele quando solicitado. A API REST fornecida será usada para obter os dados atualizados.
