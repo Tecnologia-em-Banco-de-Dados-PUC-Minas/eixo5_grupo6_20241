@@ -49,7 +49,7 @@ Figura 8 - Inserção de novos dados no MySQL
 
 **Acessando o ambiente RDS AWS**
 
-Para um entedimento do processo feito em duas partes, vale ressaltar que a primeira etapa se deu pela coleta dos dados climáticos e a segunda coleta via csv. enviado pelo salão parceiro foram inseridos os dados no banco e assim tratado pela LGPD e padrão de segurança criado, acesse o banco via dbeaver.
+Para um entedimento do processo feito em duas partes, vale ressaltar que a primeira etapa se deu pela coleta dos dados climáticos e a segunda coleta via csv. enviado pelo salão parceiro que foi tratada de acordo com o LGPD e padrão de segurança desenvolvido, acesse o banco via dbeaver.
 
 •	pucminas.cz1qlmufl8xa.sa-east-1.rds.amazonaws.com (acesso ao bd puc minas salao fios de luxo) 
 •	porta: 3306
