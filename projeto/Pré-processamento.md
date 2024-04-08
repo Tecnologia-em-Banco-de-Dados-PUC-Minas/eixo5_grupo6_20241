@@ -73,5 +73,26 @@ Executando o código em Python
 Figura 6 – Teste no Visual Studio Code
 
 ![image](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/assets/161390146/c5674ba6-8f86-46d6-9f10-3840d8a20f7d)
+
 Figura 7 - Continuação dos testes no Visual Studio Code
+
+
+![image](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/assets/161390146/fbfd8100-fce2-4e50-912d-67a87391eabf)
+
+Figura 8 - Inserção de novos dados no MySQL
+
+
+**Acessando o ambiente RDS AWS**
+
+Para um entedimento do processo feito em duas partes, vale ressaltar que a primeira etapa se deu pela coleta dos dados climáticos e a segunda coleta via csv. enviado pelo salão parceiro foram inseridos os dados no banco e assim tratado pela LGPD e padrão de segurança criado, acesse o banco via dbeaver.
+
+•	pucminas.cz1qlmufl8xa.sa-east-1.rds.amazonaws.com (acesso ao bd puc minas salao fios de luxo) 
+•	porta: 3306
+•	nome usuario: admin	
+•	senha: Samoht123.
+•	DB: dw_salao_de_beleza
+
+![image](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo6_20241/assets/161390146/2e0dff34-6503-457a-b5a1-d5fc4d0ae1d1)
+
+Figura 9 - Configuração do DBeaver com o RDS da AWS 
 
