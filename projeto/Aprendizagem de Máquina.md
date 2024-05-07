@@ -15,14 +15,14 @@ import mysql.connector
 import requests
 from datetime import datetime, timedelta
 
-# Dados de acesso ao banco de dados
+#### Dados de acesso ao banco de dados
 user = 'admin'
 password = 'Samoht123.'
 host = 'pucminas.cz1qlmufl8xa.sa-east-1.rds.amazonaws.com'
 database = 'dw_salao_de_beleza'
 port = '3306'
 
-# Conectar ao banco de dados
+#### Conectar ao banco de dados
 db_connection = mysql.connector.connect(
     host=host,
     user=user,
@@ -32,7 +32,7 @@ db_connection = mysql.connector.connect(
 )
 cursor = db_connection.cursor()
 
-# Query para extrair os dados necessários das tabelas do DW
+## Query para extrair os dados necessários das tabelas do DW
 query = """
 SELECT a.id_cliente, a.id_servico, a.data_id, a.valor_pago
 FROM fato_agendamento AS a
@@ -48,18 +48,18 @@ finally:
     cursor.close()
     db_connection.close()
 
-# Pré-processamento de dados
+## Pré-processamento de dados
 df_servicos['data_id'] = pd.to_datetime(df_servicos['data_id'])
 df_servicos['dia_da_semana'] = df_servicos['data_id'].dt.dayofweek
 df_servicos['dia_do_mes'] = df_servicos['data_id'].dt.day
 df_servicos['mes'] = df_servicos['data_id'].dt.month
 df_servicos = df_servicos.drop('data_id', axis=1)
 
-# Normalização dos valores pagos
+## Normalização dos valores pagos
 scaler = StandardScaler()
 df_servicos['valor_pago_normalizado'] = scaler.fit_transform(df_servicos[['valor_pago']])
 
-# Codificação One-Hot para 'id_servico'
+## Codificação One-Hot para 'id_servico'
 column_transformer = ColumnTransformer([
     ('one_hot_encoder', OneHotEncoder(), ['id_servico'])
 ], remainder='passthrough')
@@ -67,22 +67,22 @@ column_transformer = ColumnTransformer([
 X = column_transformer.fit_transform(df_servicos[['dia_da_semana', 'dia_do_mes', 'mes', 'id_servico']])
 y = df_servicos['valor_pago_normalizado']
 
-# Divisão dos dados
+## Divisão dos dados
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Construção e treinamento do modelo
+## Construção e treinamento do modelo
 modelo = RandomForestRegressor(n_estimators=100, random_state=42)
 modelo.fit(X_train, y_train)
 
-# Previsões
+## Previsões
 previsoes = modelo.predict(X_test)
 
-# Avaliação do modelo
+## Avaliação do modelo
 rmse = sqrt(mean_squared_error(y_test, previsoes))
 print(f'RMSE: {rmse}')
 
 
-### comentario do grupo  e analise ####
+###### comentario do grupo  e analise ########
 
 
 
@@ -105,14 +105,14 @@ from datetime import datetime, timedelta
 import mysql.connector
 import pandas as pd
 
-# Dados de acesso ao banco de dados
+## Dados de acesso ao banco de dados
 user = 'admin'
 password = 'Samoht123.'
 host = 'pucminas.cz1qlmufl8xa.sa-east-1.rds.amazonaws.com'
 database = 'dw_salao_de_beleza'
 port = '3306'
 
-# Conectar ao banco de dados
+## Conectar ao banco de dados
 db_connection = mysql.connector.connect(
     host=host,
     user=user,
@@ -122,7 +122,7 @@ db_connection = mysql.connector.connect(
 )
 cursor = db_connection.cursor()
 
-# Query para extrair os dados necessários das tabelas do DW
+## Query para extrair os dados necessários das tabelas do DW
 query = """
 SELECT a.id_cliente, a.id_servico, a.data_id, a.valor_pago
 FROM fato_agendamento AS a
@@ -131,54 +131,54 @@ JOIN d_servico AS s ON a.id_servico = s.id
 WHERE a.valor_pago IS NOT NULL;
 """
 
-# Execute a query e armazene o resultado em um DataFrame
+## Execute a query e armazene o resultado em um DataFrame
 cursor.execute(query)
 result = cursor.fetchall()
 df_agendamentos = pd.DataFrame(result, columns=['id_cliente', 'id_servico', 'data_id', 'valor_pago'])
 
-# Feche a conexão com o banco de dados
+## Feche a conexão com o banco de dados
 cursor.close()
 db_connection.close()
 
-# Agora você tem o DataFrame 'df_agendamentos' pronto para ser usado
+## Agora você tem o DataFrame 'df_agendamentos' pronto para ser usado
 print(df_agendamentos.head())
 
-# Converta 'data_id' para o tipo datetime e extraia características relevantes
+## Converta 'data_id' para o tipo datetime e extraia características relevantes
 df_agendamentos['data_id'] = pd.to_datetime(df_agendamentos['data_id'])
 df_agendamentos['dia_da_semana'] = df_agendamentos['data_id'].dt.dayofweek
 df_agendamentos['dia_do_mes'] = df_agendamentos['data_id'].dt.day
 df_agendamentos['mes'] = df_agendamentos['data_id'].dt.month
 
-# Aplicar codificação one-hot em 'id_servico'
+## Aplicar codificação one-hot em 'id_servico'
 column_transformer = ColumnTransformer([
     ('one_hot_encoder', OneHotEncoder(), ['id_servico'])
 ], remainder='passthrough')
 
-# Normalização dos valores pagos
+## Normalização dos valores pagos
 scaler = StandardScaler()
 df_agendamentos['valor_pago_normalizado'] = scaler.fit_transform(df_agendamentos[['valor_pago']])
 
-# Preparar os dados para o modelo
+## Preparar os dados para o modelo
 X = column_transformer.fit_transform(df_agendamentos[['dia_da_semana', 'dia_do_mes', 'mes']])
 y = df_agendamentos['valor_pago_normalizado']
 
-# Dividir os dados em conjuntos de treinamento e teste
+## Dividir os dados em conjuntos de treinamento e teste
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Construir e treinar o modelo de classificação
+## Construir e treinar o modelo de classificação
 modelo = GradientBoostingClassifier(n_estimators=100, random_state=42)
 modelo.fit(X_train, y_train)
 
-# Fazer previsões no conjunto de teste
+## Fazer previsões no conjunto de teste
 previsoes = modelo.predict(X_test)
 
-# Avaliar o modelo usando relatório de classificação
+## Avaliar o modelo usando relatório de classificação
 relatorio = classification_report(y_test, previsoes)
 print(relatorio)
 
 
 
-### comentario do grupo  e analise ####
+###### comentario do grupo  e analise ########
 
 
 
@@ -194,14 +194,14 @@ import requests
 import mysql.connector
 from datetime import datetime, timedelta
 
-# Dados de acesso ao banco de dados
+## Dados de acesso ao banco de dados
 user = 'admin'
 password = 'Samoht123.'
 host = 'pucminas.cz1qlmufl8xa.sa-east-1.rds.amazonaws.com'
 database = 'dw_salao_de_beleza'
 port = '3306'
 
-# Conectar ao banco de dados
+## Conectar ao banco de dados
 db_connection = mysql.connector.connect(
     host=host,
     user=user,
@@ -211,7 +211,7 @@ db_connection = mysql.connector.connect(
 )
 cursor = db_connection.cursor()
 
-# Query para extrair os dados necessários das tabelas do DW
+## Query para extrair os dados necessários das tabelas do DW
 query = """
 SELECT a.id_cliente, a.id_servico, a.data_id, a.valor_pago
 FROM fato_agendamento AS a
@@ -220,45 +220,45 @@ JOIN d_servico AS s ON a.id_servico = s.id
 WHERE a.valor_pago IS NOT NULL;
 """
 
-# Execute a query e armazene o resultado em um DataFrame
+## Execute a query e armazene o resultado em um DataFrame
 cursor.execute(query)
 result = cursor.fetchall()
 df_servicos = pd.DataFrame(result, columns=['id_cliente', 'id_servico', 'data_id', 'valor_pago'])
 
-# Suponha que 'df_servicos' seja o seu DataFrame e já contenha 'data_id', 'id_servico' e 'valor_pago'
+## Suponha que 'df_servicos' seja o seu DataFrame e já contenha 'data_id', 'id_servico' e 'valor_pago'
 
 
-# Pré-processamento de dados
-# Converta 'data_id' para o tipo datetime e extraia características relevantes
+## Pré-processamento de dados
+## Converta 'data_id' para o tipo datetime e extraia características relevantes
 df_servicos['data_id'] = pd.to_datetime(df_servicos['data_id'])
 df_servicos['dia_da_semana'] = df_servicos['data_id'].dt.dayofweek
 df_servicos['dia_do_mes'] = df_servicos['data_id'].dt.day
 df_servicos['mes'] = df_servicos['data_id'].dt.month
 
-# Agora, remova a coluna 'data_id', pois ela não será mais necessária
+## Agora, remova a coluna 'data_id', pois ela não será mais necessária
 df_servicos = df_servicos.drop('data_id', axis=1)
 
-# Divida os dados em conjuntos de treinamento e teste
+## Divida os dados em conjuntos de treinamento e teste
 X = df_servicos[['dia_da_semana', 'dia_do_mes', 'mes', 'id_servico']]
 y = df_servicos['valor_pago']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Construa e treine o modelo de regressão
+## Construa e treine o modelo de regressão
 modelo = RandomForestRegressor(n_estimators=100, random_state=42)
 modelo.fit(X_train, y_train)
 
-# Faça previsões no conjunto de teste
+## Faça previsões no conjunto de teste
 previsoes = modelo.predict(X_test)
 
-# Avalie o modelo usando o erro quadrático médio (RMSE)
+## Avalie o modelo usando o erro quadrático médio (RMSE)
 rmse = sqrt(mean_squared_error(y_test, previsoes))
 print(f'RMSE: {rmse}')
 
-# O RMSE dará uma ideia de quão bem o modelo está prevendo a demanda
+## O RMSE dará uma ideia de quão bem o modelo está prevendo a demanda
 
 
 
-### comentario do grupo  e analise ####
+###### comentario do grupo  e analise ########
 
 
 
@@ -273,14 +273,14 @@ import requests
 import mysql.connector
 from datetime import datetime, timedelta
 
-# Dados de acesso ao banco de dados
+## Dados de acesso ao banco de dados
 user = 'admin'
 password = 'Samoht123.'
 host = 'pucminas.cz1qlmufl8xa.sa-east-1.rds.amazonaws.com'
 database = 'dw_salao_de_beleza'
 port = '3306'
 
-# Conectar ao banco de dados
+## Conectar ao banco de dados
 db_connection = mysql.connector.connect(
     host=host,
     user=user,
@@ -290,7 +290,7 @@ db_connection = mysql.connector.connect(
 )
 cursor = db_connection.cursor()
 
-# Query para extrair os dados necessários das tabelas do DW
+## Query para extrair os dados necessários das tabelas do DW
 query = """
 SELECT a.id_cliente, a.id_servico, a.data_id, a.valor_pago
 FROM fato_agendamento AS a
@@ -307,41 +307,41 @@ finally:
     cursor.close()
     db_connection.close()
 
-# Pré-processamento de dados
+## Pré-processamento de dados
 df_historico['data_id'] = pd.to_datetime(df_historico['data_id'])
 df_historico['dia_da_semana'] = df_historico['data_id'].dt.dayofweek
 df_historico['dia_do_mes'] = df_historico['data_id'].dt.day
 df_historico['mes'] = df_historico['data_id'].dt.month
 df_historico = df_historico.drop('data_id', axis=1)
 
-# Normalização dos valores pagos
+## Normalização dos valores pagos
 scaler = StandardScaler()
 df_historico['valor_pago_normalizado'] = scaler.fit_transform(df_historico[['valor_pago']])
 
-# Agregação dos dados
+## Agregação dos dados
 df_agregado = df_historico.groupby(['id_cliente', 'id_servico']).agg({
     'valor_pago_normalizado': 'mean',
     'id_servico': 'count'
 }).rename(columns={'id_servico': 'frequencia_servico'}).reset_index()
 
-# Matriz de serviços
+## Matriz de serviços
 df_matriz_servicos = df_agregado.pivot(index='id_cliente', columns='id_servico', values='frequencia_servico').fillna(0)
 
-# Divisão dos dados
+## Divisão dos dados
 X_train, X_test = train_test_split(df_matriz_servicos, test_size=0.2, random_state=42)
 
-# Modelo KNN
+## Modelo KNN
 modelo_knn = NearestNeighbors(n_neighbors=5, algorithm='auto')
 modelo_knn.fit(X_train)
 
-# Recomendação
-id_cliente_especifico = 10  # Substitua pelo ID do cliente desejado
+## Recomendação
+id_cliente_especifico = 10  ## Substitua pelo ID do cliente desejado
 distancias, indices = modelo_knn.kneighbors(X_train.loc[[id_cliente_especifico]])
 
-# Serviços recomendados
+## Serviços recomendados
 vizinhos_servicos = df_matriz_servicos.iloc[indices[0]]
 servicos_recomendados = vizinhos_servicos.sum(axis=0).sort_values(ascending=False).index.tolist()
 
 print(f'Serviços recomendados para o cliente {id_cliente_especifico}: {servicos_recomendados}')
 
-### comentario do grupo  e analise ####
+###### comentario do grupo  e analise ########
