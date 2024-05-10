@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 # Dados de acesso ao banco de dados
 user = 'admin'
 password = 'Samoht123.'
-host = 'pucminas.cz1qlmufl8xa.sa-east-1.rds.amazonaws.com'
+host = 'banco-pucminas.cyqkssq3ycqa.us-east-2.rds.amazonaws.com'
 database = 'dw_salao_de_beleza'
 port = '3306'
 
@@ -23,12 +23,11 @@ db_connection = mysql.connector.connect(
 )
 cursor = db_connection.cursor()
 
-# Query para extrair os dados necessários das tabelas do DW
 query = """
 SELECT a.id_cliente, a.id_servico, a.data_id, a.valor_pago
-FROM fato_agendamento AS a
-JOIN d_cliente AS c ON a.id_cliente = c.id
-JOIN d_servico AS s ON a.id_servico = s.id
+FROM fato_pagamento AS a
+LEFT JOIN d_cliente AS c ON a.id_cliente = c.id_cliente 
+LEFT JOIN d_servico AS s ON a.id_servico = s.id_servico 
 WHERE a.valor_pago IS NOT NULL;
 """
 
@@ -67,12 +66,14 @@ X_train, X_test = train_test_split(df_matriz_servicos, test_size=0.2, random_sta
 modelo_knn = NearestNeighbors(n_neighbors=5, algorithm='auto')
 modelo_knn.fit(X_train)
 
-# Recomendação
-id_cliente_especifico = 10  # Substitua pelo ID do cliente desejado
-distancias, indices = modelo_knn.kneighbors(X_train.loc[[id_cliente_especifico]])
+# Modelo KNN
+modelo_knn = NearestNeighbors(n_neighbors=5, algorithm='auto')
+modelo_knn.fit(X_train)
 
-# Serviços recomendados
-vizinhos_servicos = df_matriz_servicos.iloc[indices[0]]
-servicos_recomendados = vizinhos_servicos.sum(axis=0).sort_values(ascending=False).index.tolist()
-
-print(f'Serviços recomendados para o cliente {id_cliente_especifico}: {servicos_recomendados}')
+# Recomendação para todos os clientes
+for id_cliente in X_train.index:
+    distancias, indices = modelo_knn.kneighbors(X_train.loc[[id_cliente]])
+    # Serviços recomendados
+    vizinhos_servicos = df_matriz_servicos.iloc[indices[0]]
+    servicos_recomendados = vizinhos_servicos.sum(axis=0).sort_values(ascending=False).index.tolist()
+    print(f'Serviços recomendados para o cliente {id_cliente}: {servicos_recomendados}')

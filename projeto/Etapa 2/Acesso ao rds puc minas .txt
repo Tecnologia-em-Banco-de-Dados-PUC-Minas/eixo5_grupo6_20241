@@ -1,15 +1,18 @@
-pucminas.cz1qlmufl8xa.sa-east-1.rds.amazonaws.com (acesso ao bd puc minas salao fios de luxo) 
-porta: 3306
-nome usuario: admin	
-senha: Samoht123.
-DB: dw_salao_de_beleza
+- Identificador da instancia: banco-pucminas
+- banco-pucminas.cyqkssq3ycqa.us-east-2.rds.amazonaws.com (acesso ao bd puc minas salao fios de luxo) 
+- porta: 3306
+- nome usuario: admin	
+- senha: Samoht123.
+- DB: dw_salao_de_beleza
+
+
+------------------------------------
 
 acesso ao aws cloud url
 
-https://sa-east-1.console.aws.amazon.com/rds/home?region=sa-east-1#database:id=pucminas;is-cluster=false
+https://us-east-2.console.aws.amazon.com/rds/home?region=us-east-2#database:id=banco-pucminas;is-cluster=false
 
-login:
-1356329@sga.pucminas.br
 
-senha:
-JMY4ram5ANX5@Hk
+- login: 1356329@sga.pucminas.br
+
+- senha: JMY4ram5ANX5@Hk

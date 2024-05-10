@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 # Dados de acesso ao banco de dados
 user = 'admin'
 password = 'Samoht123.'
-host = 'pucminas.cz1qlmufl8xa.sa-east-1.rds.amazonaws.com'
+host = 'banco-pucminas.cyqkssq3ycqa.us-east-2.rds.amazonaws.com'
 database = 'dw_salao_de_beleza' 
 port = '3306' 
 

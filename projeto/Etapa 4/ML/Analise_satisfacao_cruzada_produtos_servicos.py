@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 # Dados de acesso ao banco de dados
 user = 'admin'
 password = 'Samoht123.'
-host = 'pucminas.cz1qlmufl8xa.sa-east-1.rds.amazonaws.com'
+host = 'banco-pucminas.cyqkssq3ycqa.us-east-2.rds.amazonaws.com'
 database = 'dw_salao_de_beleza'
 port = '3306'
 
@@ -29,10 +29,9 @@ cursor = db_connection.cursor()
 # Query para extrair os dados necessários das tabelas do DW
 query = """
 SELECT a.id_cliente, a.id_servico, a.data_id, a.valor_pago
-FROM fato_agendamento AS a
-JOIN d_cliente AS c ON a.id_cliente = c.id
-JOIN d_servico AS s ON a.id_servico = s.id
-WHERE a.valor_pago IS NOT NULL;
+FROM fato_pagamento AS a
+left JOIN d_cliente AS c ON a.id_cliente = c.id_cliente 
+left JOIN d_servico AS s ON a.id_servico = s.id_servico;
 """
 try:
     cursor.execute(query)

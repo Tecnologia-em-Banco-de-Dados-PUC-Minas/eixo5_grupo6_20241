@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 # Dados de acesso ao banco de dados
 user = 'admin'
 password = 'Samoht123.'
-host = 'pucminas.cz1qlmufl8xa.sa-east-1.rds.amazonaws.com'
+host = 'banco-pucminas.cyqkssq3ycqa.us-east-2.rds.amazonaws.com'
 database = 'dw_salao_de_beleza' 
 port = '3306' 
 
@@ -15,20 +15,21 @@ hora_coleta = datetime.now()
 
 try:
     # Especifique o delimitador como ponto e vírgula
-    dados = pd.read_csv('C:/Users/thoma/OneDrive/Área de Trabalho/salao - fios de luxo/Tratamento de dados/profissionais.csv', delimiter=';')
+    dados = pd.read_csv('C:/Users/thoma/eixo5_grupo6_20241/projeto/Etapa 3/tabelas/profissionais.csv', delimiter=';')
     
     # Criar um dicionário para mapear nomes repetidos
     nomes_repetidos = {}
 
     def preencher_tabela():
         # Carregar os dados do arquivo CSV
-        dados = pd.read_csv('C:/Users/thoma/OneDrive/Área de Trabalho/salao - fios de luxo/Tratamento de dados/profissionais.csv',  delimiter=';')
+        dados = pd.read_csv('C:/Users/thoma/eixo5_grupo6_20241/projeto/Etapa 3/tabelas/profissionais.csv',  delimiter=';')
 
         # Imprimir os nomes das colunas
         print(dados.columns)
 
         # Percorrer os dados do arquivo CSV e inserir na tabela
         for _, row in dados.iterrows():
+            id = row ['id_funcionario']
             nome = row['Nome completo']
             cargo = row['Função']
             telefone = row ['telefone']
@@ -36,8 +37,8 @@ try:
 
             # Executar o comando SQL para inserir os dados na tabela
             print(f'inserindo dados na tabela profissionais')
-            sql = 'INSERT INTO d_funcionario (nome, cargo, telefone) VALUES (%s, %s, %s)'
-            values = (nome, cargo, telefone)
+            sql = 'INSERT INTO d_funcionario (id_funcionario,nome, cargo, telefone) VALUES (%s,%s, %s, %s)'
+            values = (id,nome, cargo, telefone)
             cursor.execute(sql, values)
     # Chamar a função para preencher a tabela
     preencher_tabela()

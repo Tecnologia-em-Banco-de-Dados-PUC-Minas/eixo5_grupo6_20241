@@ -1,0 +1,115 @@
+﻿id_servico;nome;valor
+1;Barba;30
+2;Cabelo e Barba;65
+3;Corte Infantil;40
+4;Corte Masculino;40
+5;Corte Parceria;40
+6;Pezinho Masculino;20
+7;Pigmentação de Barba;20
+8;Sobrancelha masculino;20
+9;Aplicação de cílios;20
+10;Cilios 3, 4, 5 D;150
+11;Manutenção Cilios 3,4,5D;120
+12;Manutenção volume brasileiro;90
+13;Volume Brasileiro;130
+14;#NOME?;35
+15;#NOME?;40
+16;Aplicação de Coloração do cliente raiz;90
+17;Aplicação de Coloração total do cliente;150
+18;Aplicação de Henna nos Fios;100
+19;BABYLISS  G;55
+20;BABYLISS  GG;65
+21;BABYLISS  P;40
+22;Coloração Inoa;155
+23;Coloração Keune;155
+24;Coloração Keune Ruivo;185
+25;Corte - Franja;40
+26;Corte a Máquina;50
+27;Corte Bordado;150
+28;Corte FEMININO;120
+29;Decapagem / Descoloração;0
+30;Escova e Prancha;0
+31;Escova G;65
+32;Escova GG;85
+33;Escova M;55
+34;Escova P;45
+35;Escova+ PRANCHA  GG;100
+36;Escova+ PRANCHA  M;85
+37;Escova+ PRANCHA  P;75
+38;hidratação Muzza;80
+39;Hidratação Previa;165
+40;Hidratação Senscience, Olorche, Keune, Joico G;180
+41;Hidratação Senscience, Olorche, Keune, Joico GG;215
+42;Hidratação Senscience, Olorche, Keune, Joico P;155
+43;Hidratação Senscience, Orloche, Keune, Joico M;165
+44;Hidratação Takae G;185
+45;Hidratação Takae GG;205
+46;Hidratação Takae M;175
+47;Hidratação Takae P;165
+48;Hidratação Wella;125
+49;Higienização;0
+50;Keune Vegana;175
+51;Lavar;15
+52;Lavar e Secar G;55
+53;Lavar e Secar GG;90
+54;Lavar e Secar M;45
+55;Lavar e Secar P;35
+56;LAVAR,SECAR+PRANCHA  M;55
+57;LAVAR+SECAR+BABYLISS;120
+58;MATIZAÇÃO G;100
+59;MATIZAÇÃO GG;120
+60;MATIZAÇÃO M;90
+61;MATIZAÇÃO P;80
+62;Mechas;550
+63;Mechas Californianas;0
+64;Mechas Invertidas;0
+65;Modelar pontas;20
+66;Nutrição KEUNE YOU G;200
+67;Nutrição KEUNE YOU GG;225
+68;Nutrição KEUNE YOU M;185
+69;Nutrição KEUNE YOU P;175
+70;Nutrição P.H;165
+71;Pure Repair P.H;350
+72;Reconstrução Capilar P;165
+73;Reconstrução JOICO K-PAK, OLORCHE  OU CPR P;175
+74;Reconstrução JOICO K-PAK,OLORCHE OU CPR G;215
+75;Reconstrução JOICO K-PAK,OLORCHE OU CPR GG;240
+76;Reconstrução JOICO K-PAK,OLORCHE OU CPR M;185
+77;Strong;0
+78;Terapia Capilar com ozonio;235
+79;Terapia Capilar pacote;157
+80;Tratamento de Nutrição Capilar;185
+81;TRATAMENTO INSTANTÂNEO G;75
+82;TRATAMENTO INSTANTÂNEO GG;85
+83;TRATAMENTO INSTANTÂNEO M;65
+84;TRATAMENTO INSTANTÂNEO P;60
+85;Alongamento em gel Molde F-1;180
+86;Alongamento Soft Gel;150
+87;Banho em Gel;120
+88;Blindagem;80
+89;Manicure - Gel top gloss;35
+90;Manutenção Banho em Gel;90
+91;Manutenção Soft Gel;120
+92;Postiça Realista;100
+93;Base;39,9
+94;Esmaltação  - ESPECIAL;7
+95;Esmaltação - Mãos;15
+96;Esmaltação - Pés;15
+97;LIXAR PÉS;10
+98;Manicure;27
+99;Manicure e Pedicure;45
+100;Manicure e Pedicure - Francesinha;5
+101;Pedicure;27
+102;SPA de pés;35
+103;Top Coat em gel;20
+104;Unha Artística/Decorada;2
+105;Postiça;10
+106;Remoção;60
+107;Unha de Gel - Manutenção;50
+108;Maquiagem  SOCIAL;200
+109;BABYLISS M;50
+110;Penteado;180
+111;Design de Sobrancelha;60
+112;Pintura Sobrancelhas - Henna;60
+113;Pintura Sobrancelhas com Refectocil;60
+999;Sem referencia;0

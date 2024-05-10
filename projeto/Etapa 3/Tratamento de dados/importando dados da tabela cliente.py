@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 # Dados de acesso ao banco de dados
 user = 'admin'
 password = 'Samoht123.'
-host = 'pucminas.cz1qlmufl8xa.sa-east-1.rds.amazonaws.com'
+host = 'banco-pucminas.cyqkssq3ycqa.us-east-2.rds.amazonaws.com'
 database = 'dw_salao_de_beleza' 
 port = '3306' 
 
@@ -15,20 +15,21 @@ hora_coleta = datetime.now()
 
 def preencher_tabela():
     # Carregar os dados do arquivo CSV
-    dados = pd.read_csv("C:/Users/thoma/OneDrive/Área de Trabalho/salao - fios de luxo/Tratamento de dados/Clientes.csv", delimiter=';')
+    dados = pd.read_csv('C:/Users/thoma/eixo5_grupo6_20241/projeto/Etapa 3/tabelas/Clientes.csv', delimiter=';')
 
     # Imprimir os nomes das colunas
     print(dados.columns)
 
     # Percorrer os dados do arquivo CSV e inserir na tabela
     for _, row in dados.iterrows():
+        id = row['id_cliente']
         nome = row['Nome']
         telefone = row['Telefone']
 
         # Executar o comando SQL para inserir os dados na tabela
         print("inserindo dados na tabela clientes")
-        sql = "INSERT INTO d_cliente (nome, telefone) VALUES (%s, %s)"
-        values = (nome, telefone)
+        sql = "INSERT INTO d_cliente (id_cliente,nome, telefone) VALUES (%s,%s, %s)"
+        values = (id,nome, telefone)
         cursor.execute(sql, values)
 
 # Chamar a função para preencher a tabela
