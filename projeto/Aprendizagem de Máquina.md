@@ -1,8 +1,8 @@
-**Machine Learning:**
+# Machine Learning:
 
 Nos scripts apresentados, foram utilizadas técnicas de regressão, classificação e sistemas de recomendação, que são pilares fundamentais do Machine Learning. A eficácia desses métodos varia conforme a complexidade dos dados e o objetivo da análise. O Random Forest é eficaz para prever valores contínuos e capturar complexidades não lineares. O Gradient Boosting Classifier é poderoso para classificação, lidando bem com dados desbalanceados. Já o Nearest Neighbors é ideal para recomendações, pois identifica padrões de consumo similares entre clientes. Cada técnica tem seu método e aplicação específica, demonstrando a versatilidade e o potencial do Machine Learning para fornecer insights valiosos e decisões baseadas em dados. Essas abordagens são fundamentais para transformar grandes volumes de dados em ações estratégicas e personalizadas, impulsionando negócios e melhorando a experiência do cliente.
 
-**Análise de satisfação cruzada entre produto e serviço**
+# Análise de satisfação cruzada entre produto e serviço
 
 # O RMSE (Root Mean Square Error)
 
@@ -30,14 +30,14 @@ from sklearn.compose import ColumnTransformer
 import mysql.connector
 from datetime import datetime
 
-# Dados de acesso ao banco de dados
+#### Dados de acesso ao banco de dados
 user = 'admin'
 password = 'Samoht123.'
 host = 'banco-pucminas.cyqkssq3ycqa.us-east-2.rds.amazonaws.com'
 database = 'dw_salao_de_beleza'
 port = '3306'
 
-# Conectar ao banco de dados
+#### Conectar ao banco de dados
 db_connection = mysql.connector.connect(
     host=host,
     user=user,
@@ -47,7 +47,7 @@ db_connection = mysql.connector.connect(
 )
 cursor = db_connection.cursor()
 
-# Query para extrair os dados necessários das tabelas do DW
+#### Query para extrair os dados necessários das tabelas do DW
 query = """
 SELECT a.id_cliente, a.id_servico, a.data_id, a.valor_pago
 FROM fato_pagamento AS a
@@ -56,6 +56,7 @@ LEFT JOIN d_servico AS s ON a.id_servico = s.id_servico
 WHERE a.valor_pago IS NOT NULL;
 """
 
+<<<<<<< HEAD
 try:
     cursor.execute(query)
     result = cursor.fetchall()
@@ -66,13 +67,27 @@ finally:
 
 # Verifique se as colunas estão corretas
 print(df_agendamentos.columns)
+=======
+#### Execute a query e armazene o resultado em um DataFrame
+cursor.execute(query)
+result = cursor.fetchall()
+df_agendamentos = pd.DataFrame(result, columns=['id_cliente', 'id_servico', 'data_id', 'valor_pago'])
 
-# Converta 'data_id' para o tipo datetime e extraia características relevantes
+#### Feche a conexão com o banco de dados
+cursor.close()
+db_connection.close()
+
+#### Agora você tem o DataFrame 'df_agendamentos' pronto para ser usado
+print(df_agendamentos.head())
+>>>>>>> febcbde7e618c2f9f9d0640f2cb8d29521d7f95d
+
+#### Converta 'data_id' para o tipo datetime e extraia características relevantes
 df_agendamentos['data_id'] = pd.to_datetime(df_agendamentos['data_id'])
 df_agendamentos['dia_da_semana'] = df_agendamentos['data_id'].dt.dayofweek
 df_agendamentos['dia_do_mes'] = df_agendamentos['data_id'].dt.day
 df_agendamentos['mes'] = df_agendamentos['data_id'].dt.month
 
+<<<<<<< HEAD
 # Aplicar codificação one-hot em 'id_servico'
 # Certifique-se de que 'id_servico' está presente no DataFrame antes de aplicar a transformação
 if 'id_servico' in df_agendamentos.columns:
@@ -214,10 +229,42 @@ else:
 
 
 O modelo de classificação que desenvolvemos alcançou uma acurácia de 73%, o que indica que ele é capaz de prever corretamente a satisfação dos clientes em três quartos dos casos. No entanto, ao olhar para a média macro, observamos valores em torno de 0.30, refletindo um desempenho moderado na identificação equitativa de todas as categorias de satisfação. A média ponderada, por outro lado, mostra que o modelo é mais eficaz na classificação das categorias com maior número de amostras, com uma precisão e um F1-score de aproximadamente 0.73 e 0.72, respectivamente. Esses resultados sugerem que, enquanto o modelo é confiável para a maioria das previsões, ainda há espaço para melhorias, especialmente na identificação de categorias menos representadas nos dados.
+=======
+#### Aplicar codificação one-hot em 'id_servico'
+column_transformer = ColumnTransformer([
+    ('one_hot_encoder', OneHotEncoder(), ['id_servico'])
+], remainder='passthrough')
+
+#### Normalização dos valores pagos
+scaler = StandardScaler()
+df_agendamentos['valor_pago_normalizado'] = scaler.fit_transform(df_agendamentos[['valor_pago']])
+
+#### Preparar os dados para o modelo
+X = column_transformer.fit_transform(df_agendamentos[['dia_da_semana', 'dia_do_mes', 'mes']])
+y = df_agendamentos['valor_pago_normalizado']
+
+#### Dividir os dados em conjuntos de treinamento e teste
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+#### Construir e treinar o modelo de classificação
+modelo = GradientBoostingClassifier(n_estimators=100, random_state=42)
+modelo.fit(X_train, y_train)
+
+#### Fazer previsões no conjunto de teste
+previsoes = modelo.predict(X_test)
+
+#### Avaliar o modelo usando relatório de classificação
+relatorio = classification_report(y_test, previsoes)
+print(relatorio)
 
 
 
-**Previsão de demanda**
+############ comentario do grupo  e analise ################
+>>>>>>> febcbde7e618c2f9f9d0640f2cb8d29521d7f95d
+
+
+
+# Previsão de demanda
 
 # O RMSE (Root Mean Square Error)
 
@@ -237,14 +284,14 @@ import requests
 import mysql.connector
 from datetime import datetime, timedelta
 
-# Dados de acesso ao banco de dados
+#### Dados de acesso ao banco de dados
 user = 'admin'
 password = 'Samoht123.'
 host = 'banco-pucminas.cyqkssq3ycqa.us-east-2.rds.amazonaws.com'
 database = 'dw_salao_de_beleza'
 port = '3306'
 
-# Conectar ao banco de dados
+#### Conectar ao banco de dados
 db_connection = mysql.connector.connect(
     host=host,
     user=user,
@@ -254,7 +301,7 @@ db_connection = mysql.connector.connect(
 )
 cursor = db_connection.cursor()
 
-# Query para extrair os dados necessários das tabelas do DW
+#### Query para extrair os dados necessários das tabelas do DW
 query = """
 SELECT a.id_cliente, a.id_servico, a.data_id, a.valor_pago
 FROM fato_pagamento AS a
@@ -263,6 +310,7 @@ LEFT JOIN d_servico AS s ON a.id_servico = s.id_servico
 WHERE a.valor_pago IS NOT NULL;
 """
 
+<<<<<<< HEAD
 try:
     cursor.execute(query)
     result = cursor.fetchall()
@@ -270,42 +318,54 @@ try:
 finally:
     cursor.close()
     db_connection.close()
+=======
+#### Execute a query e armazene o resultado em um DataFrame
+cursor.execute(query)
+result = cursor.fetchall()
+df_servicos = pd.DataFrame(result, columns=['id_cliente', 'id_servico', 'data_id', 'valor_pago'])
+>>>>>>> febcbde7e618c2f9f9d0640f2cb8d29521d7f95d
 
-# Suponha que 'df_servicos' seja o seu DataFrame e já contenha 'data_id', 'id_servico' e 'valor_pago'
+#### Suponha que 'df_servicos' seja o seu DataFrame e já contenha 'data_id', 'id_servico' e 'valor_pago'
 
 
+<<<<<<< HEAD
 # Pré-processamento de dados
 
 # Converta 'data_id' para o tipo datetime e extraia características relevantes
+=======
+#### Pré-processamento de dados
+#### Converta 'data_id' para o tipo datetime e extraia características relevantes
+>>>>>>> febcbde7e618c2f9f9d0640f2cb8d29521d7f95d
 df_servicos['data_id'] = pd.to_datetime(df_servicos['data_id'])
 df_servicos['dia_da_semana'] = df_servicos['data_id'].dt.dayofweek
 df_servicos['dia_do_mes'] = df_servicos['data_id'].dt.day
 df_servicos['mes'] = df_servicos['data_id'].dt.month
 
-# Agora, remova a coluna 'data_id', pois ela não será mais necessária
+#### Agora, remova a coluna 'data_id', pois ela não será mais necessária
 df_servicos = df_servicos.drop('data_id', axis=1)
 
-# Divida os dados em conjuntos de treinamento e teste
+#### Divida os dados em conjuntos de treinamento e teste
 X = df_servicos[['dia_da_semana', 'dia_do_mes', 'mes', 'id_servico']]
 y = df_servicos['valor_pago']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Construa e treine o modelo de regressão
+#### Construa e treine o modelo de regressão
 modelo = RandomForestRegressor(n_estimators=100, random_state=42)
 modelo.fit(X_train, y_train)
 
-# Faça previsões no conjunto de teste
+#### Faça previsões no conjunto de teste
 previsoes = modelo.predict(X_test)
 
-# Avalie o modelo usando o erro quadrático médio (RMSE)
+#### Avalie o modelo usando o erro quadrático médio (RMSE)
 rmse = sqrt(mean_squared_error(y_test, previsoes))
 print(f'RMSE: {rmse}')
 
-# O RMSE dará uma ideia de quão bem o modelo está prevendo a demanda
+#### O RMSE dará uma ideia de quão bem o modelo está prevendo a demanda
 
 
 ![alt text](image-5.png)
 
+<<<<<<< HEAD
 # comentario do grupo  e analise 
 
 O modelo de regressão florestal aleatória foi desenvolvido para prever os valores pagos pelos serviços com base em dados históricos. Após o treinamento e teste, o modelo alcançou um RMSE de 26.31. O RMSE é uma métrica que mede a média das diferenças ao quadrado entre os valores previstos pelo modelo e os valores reais. Um RMSE de 26.31 significa que, em média, as previsões do modelo desviam-se dos valores reais por aproximadamente 26.31 unidades na mesma escala dos valores pagos.
@@ -313,11 +373,14 @@ O modelo de regressão florestal aleatória foi desenvolvido para prever os valo
 Esse número nos ajuda a entender a precisão das previsões do modelo. Quanto menor o RMSE, mais próximo das observações reais estão as previsões do modelo. No contexto dos nossos dados, um RMSE de 26.31 pode ser considerado bom ou não, dependendo da variação e da escala dos valores pagos. Se os valores pagos variam, por exemplo, entre 100 e 1000, um RMSE de 26.31 é bastante baixo e indica um modelo altamente preciso. Por outro lado, se os valores pagos são tipicamente em torno de 50, um RMSE de 26.31 é relativamente alto, sugerindo que o modelo pode precisar de melhorias.
 
 É importante notar que o RMSE não nos diz onde ou como as previsões estão erradas, apenas fornece uma medida geral de precisão. Para uma análise mais detalhada, podemos olhar para outras métricas ou visualizar os erros para entender melhor o desempenho do modelo.
+=======
+############ comentario do grupo  e analise ################
+>>>>>>> febcbde7e618c2f9f9d0640f2cb8d29521d7f95d
 
 
 
 
-**Recomendação de serviço**
+# Recomendação de serviço
 
 
 # KNN (K-Nearest Neighbors)
@@ -335,14 +398,14 @@ import requests
 import mysql.connector
 from datetime import datetime, timedelta
 
-# Dados de acesso ao banco de dados
+#### Dados de acesso ao banco de dados
 user = 'admin'
 password = 'Samoht123.'
 host = 'pucminas.cz1qlmufl8xa.sa-east-1.rds.amazonaws.com'
 database = 'dw_salao_de_beleza'
 port = '3306'
 
-# Conectar ao banco de dados
+#### Conectar ao banco de dados
 db_connection = mysql.connector.connect(
     host=host,
     user=user,
@@ -352,7 +415,7 @@ db_connection = mysql.connector.connect(
 )
 cursor = db_connection.cursor()
 
-# Query para extrair os dados necessários das tabelas do DW
+#### Query para extrair os dados necessários das tabelas do DW
 query = """
 SELECT a.id_cliente, a.id_servico, a.data_id, a.valor_pago
 FROM fato_agendamento AS a
@@ -369,43 +432,44 @@ finally:
     cursor.close()
     db_connection.close()
 
-# Pré-processamento de dados
+#### Pré-processamento de dados
 df_historico['data_id'] = pd.to_datetime(df_historico['data_id'])
 df_historico['dia_da_semana'] = df_historico['data_id'].dt.dayofweek
 df_historico['dia_do_mes'] = df_historico['data_id'].dt.day
 df_historico['mes'] = df_historico['data_id'].dt.month
 df_historico = df_historico.drop('data_id', axis=1)
 
-# Normalização dos valores pagos
+#### Normalização dos valores pagos
 scaler = StandardScaler()
 df_historico['valor_pago_normalizado'] = scaler.fit_transform(df_historico[['valor_pago']])
 
-# Agregação dos dados
+#### Agregação dos dados
 df_agregado = df_historico.groupby(['id_cliente', 'id_servico']).agg({
     'valor_pago_normalizado': 'mean',
     'id_servico': 'count'
 }).rename(columns={'id_servico': 'frequencia_servico'}).reset_index()
 
-# Matriz de serviços
+#### Matriz de serviços
 df_matriz_servicos = df_agregado.pivot(index='id_cliente', columns='id_servico', values='frequencia_servico').fillna(0)
 
-# Divisão dos dados
+#### Divisão dos dados
 X_train, X_test = train_test_split(df_matriz_servicos, test_size=0.2, random_state=42)
 
-# Modelo KNN
+#### Modelo KNN
 modelo_knn = NearestNeighbors(n_neighbors=5, algorithm='auto')
 modelo_knn.fit(X_train)
 
-# Recomendação
-id_cliente_especifico = 10  # Substitua pelo ID do cliente desejado
+#### Recomendação
+id_cliente_especifico = 10  #### Substitua pelo ID do cliente desejado
 distancias, indices = modelo_knn.kneighbors(X_train.loc[[id_cliente_especifico]])
 
-# Serviços recomendados
+#### Serviços recomendados
 vizinhos_servicos = df_matriz_servicos.iloc[indices[0]]
 servicos_recomendados = vizinhos_servicos.sum(axis=0).sort_values(ascending=False).index.tolist()
 
 print(f'Serviços recomendados para o cliente {id_cliente_especifico}: {servicos_recomendados}')
 
+<<<<<<< HEAD
 
 ![alt text](image-6.png)
 
@@ -420,3 +484,6 @@ Nesse modelo, desenvolvemos um sistema de recomendação baseado em KNN (K-Neare
 Para cada cliente, o modelo fornece uma lista de serviços recomendados. Esses serviços são selecionados com base na agregação das frequências dos serviços utilizados pelos vizinhos mais próximos. Por exemplo, para o cliente 155, os serviços recomendados incluem os IDs [31, 99, 14, …], o que significa que esses são os serviços mais populares entre os clientes semelhantes a ele.As recomendações são personalizadas e refletem as preferências coletivas dos clientes com comportamentos de compra semelhantes. Um grande número de recomendações indica uma ampla variedade de serviços populares entre os vizinhos, enquanto uma lista menor sugere um conjunto mais focado de preferências.
 
 Essas recomendações podem ser usadas para campanhas de marketing direcionadas, melhorando a experiência do cliente através de ofertas personalizadas e aumentando as oportunidades de vendas cruzadas. Além disso, a análise dessas recomendações pode fornecer insights valiosos sobre as tendências de consumo e ajudar na gestão de estoque e planejamento de serviços.
+=======
+############ comentario do grupo  e analise ################
+>>>>>>> febcbde7e618c2f9f9d0640f2cb8d29521d7f95d
