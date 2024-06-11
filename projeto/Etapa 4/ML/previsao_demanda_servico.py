@@ -7,6 +7,9 @@ from math import sqrt
 import requests
 import mysql.connector
 from datetime import datetime, timedelta
+from sklearn.metrics import mean_absolute_error, r2_score
+import matplotlib.pyplot as plt
+
 
 # Dados de acesso ao banco de dados
 user = 'admin'
@@ -69,6 +72,54 @@ previsoes = modelo.predict(X_test)
 
 # Avalie o modelo usando o erro quadrático médio (RMSE)
 rmse = sqrt(mean_squared_error(y_test, previsoes))
-print(f'RMSE: {rmse}')
+mae = mean_absolute_error(y_test, previsoes)
+r2 = r2_score(y_test, previsoes)
 
-# O RMSE dará uma ideia de quão bem o modelo está prevendo a demanda
+# Exportar métricas para um arquivo CSV
+df_metricas = pd.DataFrame({
+    'RMSE': [rmse],
+    'MAE': [mae],
+    'R2': [r2]
+})
+df_metricas.to_csv('previsao_demanda_servico_metricas_modelo.csv', index=False)
+
+# Importância das variáveis
+importancias = modelo.feature_importances_
+variaveis = ['dia_da_semana', 'dia_do_mes', 'mes', 'id_servico']
+df_importancias = pd.DataFrame({
+    'Variável': variaveis,
+    'Importância': importancias
+}).sort_values(by='Importância', ascending=False)
+
+# Exportar importâncias para um arquivo CSV
+df_importancias.to_csv('previsao_demanda_servico_importancia_variaveis.csv', index=False)
+
+# Visualização dos resultados
+plt.figure(figsize=(15, 5))
+
+# Gráfico de valores reais vs previsões
+plt.subplot(1, 3, 1)
+plt.scatter(y_test, previsoes, alpha=0.5)
+plt.plot([y.min(), y.max()], [y.min(), y.max()], 'k--', lw=2)
+plt.xlabel('Valores Reais')
+plt.ylabel('Previsões')
+plt.title('Valores Reais vs Previsões')
+
+# Gráfico de resíduos
+plt.subplot(1, 3, 2)
+residuos = y_test - previsoes
+plt.scatter(previsoes, residuos, alpha=0.5)
+plt.hlines(y=0, xmin=residuos.min(), xmax=residuos.max(), colors='k', linestyles='--', lw=2)
+plt.xlabel('Previsões')
+plt.ylabel('Resíduos')
+plt.title('Gráfico de Resíduos')
+
+# Gráfico de importância das variáveis
+plt.subplot(1, 3, 3)
+plt.barh(variaveis, importancias, color='skyblue')
+plt.xlabel('Importância')
+plt.title('Importância das Variáveis')
+
+plt.tight_layout()
+plt.savefig('previsao_demanda_servico_resultados_visualizacao.png')
+plt.show()

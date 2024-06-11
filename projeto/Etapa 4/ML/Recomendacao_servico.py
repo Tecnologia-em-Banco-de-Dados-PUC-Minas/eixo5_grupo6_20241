@@ -1,10 +1,10 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.neighbors import NearestNeighbors
-import requests
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import mysql.connector
-from datetime import datetime, timedelta
+import matplotlib.pyplot as plt
 
 # Dados de acesso ao banco de dados
 user = 'admin'
@@ -59,21 +59,59 @@ df_agregado = df_historico.groupby(['id_cliente', 'id_servico']).agg({
 # Matriz de serviços
 df_matriz_servicos = df_agregado.pivot(index='id_cliente', columns='id_servico', values='frequencia_servico').fillna(0)
 
+# Supondo que 'id_servico' seja a classe alvo e que cada cliente tenha um único 'id_servico' associado
+# Se 'id_servico' não for único por cliente, você precisará ajustar essa parte
+y = df_agregado.groupby('id_cliente')['id_servico'].first()  # Obter o primeiro 'id_servico' para cada cliente
+
+# Certifique-se de que o índice de 'y' corresponda ao índice de 'df_matriz_servicos'
+y = y.reindex(df_matriz_servicos.index)
+
 # Divisão dos dados
-X_train, X_test = train_test_split(df_matriz_servicos, test_size=0.2, random_state=42)
-
+X = df_matriz_servicos
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 # Modelo KNN
-modelo_knn = NearestNeighbors(n_neighbors=5, algorithm='auto')
-modelo_knn.fit(X_train)
+modelo_knn = KNeighborsClassifier(n_neighbors=5)
+modelo_knn.fit(X_train, y_train)
 
-# Modelo KNN
-modelo_knn = NearestNeighbors(n_neighbors=5, algorithm='auto')
-modelo_knn.fit(X_train)
+# Predição para o conjunto de teste
+y_pred = modelo_knn.predict(X_test)
+
 
 # Recomendação para todos os clientes
 for id_cliente in X_train.index:
     distancias, indices = modelo_knn.kneighbors(X_train.loc[[id_cliente]])
     # Serviços recomendados
-    vizinhos_servicos = df_matriz_servicos.iloc[indices[0]]
+    vizinhos_servicos = X.iloc[indices[0]]
     servicos_recomendados = vizinhos_servicos.sum(axis=0).sort_values(ascending=False).index.tolist()
     print(f'Serviços recomendados para o cliente {id_cliente}: {servicos_recomendados}')
+
+recomendacoes = []
+for id_cliente in X_train.index:
+    distancias, indices = modelo_knn.kneighbors(X_train.loc[[id_cliente]])
+    vizinhos_servicos = X.iloc[indices[0]]
+    servicos_recomendados = vizinhos_servicos.sum(axis=0).sort_values(ascending=False).index.tolist()
+    recomendacoes.append((id_cliente, servicos_recomendados))
+
+df_recomendacoes = pd.DataFrame(recomendacoes, columns=['id_cliente', 'servicos_recomendados'])
+df_recomendacoes.to_csv('recomendacao_servico_cliente.csv', index=False)
+
+
+# Métricas de avaliação
+acuracia = accuracy_score(y_test, y_pred)
+matriz_confusao = confusion_matrix(y_test, y_pred)
+relatorio_classificacao = classification_report(y_test, y_pred)
+
+print(f'Acurácia: {acuracia}')
+print('Matriz de Confusão:')
+print(matriz_confusao)
+print('Relatório de Classificação:')
+print(relatorio_classificacao)
+
+# Visualização gráfica da frequência dos serviços recomendados
+frequencias = df_recomendacoes['servicos_recomendados'].explode().value_counts()
+plt.figure(figsize=(10, 6))
+frequencias.plot(kind='bar')
+plt.title('Frequência dos Serviços Recomendados')
+plt.xlabel('ID do Serviço')
+plt.ylabel('Frequência')
+plt.show()
