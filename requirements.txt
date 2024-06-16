@@ -4,3 +4,4 @@ mysql-connector
 requests
 matplotlib
 seaborn
+python-dotenv

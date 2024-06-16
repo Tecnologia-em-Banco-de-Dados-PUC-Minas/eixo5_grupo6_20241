@@ -75,6 +75,12 @@ rmse = sqrt(mean_squared_error(y_test, previsoes))
 mae = mean_absolute_error(y_test, previsoes)
 r2 = r2_score(y_test, previsoes)
 
+#resultados no terminal
+
+print(rmse)
+print(mae)
+print(r2)
+
 # Exportar métricas para um arquivo CSV
 df_metricas = pd.DataFrame({
     'RMSE': [rmse],
