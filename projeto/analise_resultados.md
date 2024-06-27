@@ -9,6 +9,7 @@ Após algumas semanas de treinamentos dos modelos de machine learning anteriorme
 
 Como equipe, desenvolvemos um modelo de floresta aleatória para prever os valores de pagamentos com base em dados de um salão de beleza. Após treinar nosso modelo com um conjunto de dados cuidadosamente preparado, avaliamos seu desempenho usando várias métricas.
 
+
 ## Métricas de Avaliação
 
 - **RMSE (Erro Quadrático Médio Raiz)**: Nosso modelo alcançou um RMSE de $$0.4442$$, o que significa que, em média, as previsões do modelo estão a essa distância dos valores reais. Dado que os valores foram normalizados, estamos satisfeitos com esse resultado, pois indica que o modelo está fazendo previsões precisas.
@@ -25,6 +26,7 @@ Analisamos a importância das variáveis, que nos ajuda a entender quais caracte
 
 Com base nesses resultados, podemos concluir que o modelo que criamos como equipe está performando bem e fazendo previsões confiáveis. No entanto, sempre há espaço para melhorias, e poderíamos experimentar ajustar os parâmetros do modelo ou testar diferentes algoritmos para buscar resultados ainda melhores. Como grupo, estamos comprometidos em continuar aprimorando nosso trabalho para alcançar a excelência em modelagem preditiva.
 
+![alt text](<Etapa 5/analise_satisfacao_produto_servico.png>)
 
 
 # Análise de Resultados do Modelo de Classificação - ML previsão de cancelamento agenda
@@ -45,6 +47,9 @@ Com base nesses resultados, podemos concluir que, embora o modelo tenha uma acur
 
 Como equipe, estamos comprometidos em continuar aprimorando nosso trabalho para alcançar a excelência em modelagem preditiva.
 
+![alt text](<Etapa 5/previsões_cancelamento_agenda_corretas_incorretas.png>)
+[text](analise_resultados.md) ![text](<Etapa 5/previsões_cancelamento_agenda_matriz_confusao.png>)
+
 
 # Análise de Resultados do Modelo de Regressão - ML previsão de demanda serviço
 
@@ -61,6 +66,9 @@ Como equipe, desenvolvemos um modelo de RandomForestRegressor para prever os val
 ## Conclusão
 
 Com base nesses resultados, podemos concluir que o modelo que criamos como equipe está performando bem e fazendo previsões confiáveis. No entanto, sempre há espaço para melhorias, e poderíamos experimentar ajustar os parâmetros do modelo ou testar diferentes algoritmos para buscar resultados ainda melhores. Como equipe, estamos comprometidos em continuar aprimorando nosso trabalho para alcançar a excelência em modelagem preditiva.
+
+![alt text](<Etapa 5/previsao_demanda_servico_resultados_visualizacao.png>)
+
 
 # Análise de Resultados do Modelo de Classificação
 
@@ -89,6 +97,8 @@ A avaliação do modelo foi realizada utilizando as seguintes métricas:
 
 ## Conclusão
 Com base nesses resultados, podemos concluir que o modelo está performando de maneira satisfatória, mas há espaço para melhorias. A acurácia pode ser melhorada, e a análise da matriz de confusão e do relatório de classificação pode nos ajudar a entender onde o modelo está errando mais e ajustar nossas estratégias de modelagem. Como equipe, estamos comprometidos em continuar aprimorando nosso trabalho para alcançar a excelência em modelagem preditiva.
+
+![alt text](<Etapa 5/Recomendacao_servico.png>)
 
 ---
 

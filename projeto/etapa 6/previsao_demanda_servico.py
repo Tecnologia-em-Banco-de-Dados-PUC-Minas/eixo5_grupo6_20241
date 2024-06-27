@@ -36,19 +36,15 @@ db_connection = acessa_banco.conectar_banco_dados(host, user, password, database
 if db_connection is not None:
     # Acessar a tabela e obter o DataFrame
     df_servicos = acessa_banco.acessa_tabela(db_connection)
-    # ... (restante do seu código de pré-processamento)
 else:
     print("Não foi possível estabelecer uma conexão com o banco de dados.")
 
 
 # Pré-processamento de dados
-# Converta 'data_id' para o tipo datetime e extraia características relevantes
 df_servicos['data_id'] = pd.to_datetime(df_servicos['data_id'])
 df_servicos['dia_da_semana'] = df_servicos['data_id'].dt.dayofweek
 df_servicos['dia_do_mes'] = df_servicos['data_id'].dt.day
 df_servicos['mes'] = df_servicos['data_id'].dt.month
-
-# Agora, remova a coluna 'data_id', pois ela não será mais necessária
 df_servicos = df_servicos.drop('data_id', axis=1)
 
 # Divida os dados em conjuntos de treinamento e teste
